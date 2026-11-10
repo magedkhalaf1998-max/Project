@@ -1,51 +1,32 @@
-# Screenshot Question Helper
+# مساعد الأسئلة بالذكاء الاصطناعي
 
-A small, user-controlled Python app that captures the primary monitor (or accepts an image file) and asks a vision-capable AI model to explain the question. It is intended as a learning aid, not a way to bypass rules or assessments.
+يحتوي المستودع على نسخة سطر أوامر لسطح المكتب، وتطبيق Android أصلي بسيط لاختيار صورة سؤال وطلب شرح من نموذج ذكاء اصطناعي يدعم الصور.
 
-## Privacy and responsible use
+## تطبيق Android
 
-- Screen capture is started only when you run the program.
-- By default, the captured screen is opened for review and must be explicitly approved before upload.
-- The image is sent to the AI provider configured by your API key. Do not send sensitive information; review the provider's privacy and data-retention terms.
-- Use this only where screen assistance and AI tools are permitted. Follow your school, workplace, and application rules.
-- The AI can be wrong. Check its explanation and answer.
+التطبيق موجود في مجلد `android/`. يختار المستخدم صورة بنفسه من الهاتف، ويراجع طلب الإرسال ويؤكده قبل رفع الصورة. لا يلتقط التطبيق الشاشة في الخلفية. أدخل مفتاح API بنفسك داخل التطبيق؛ لا يُحفظ المفتاح في التطبيق أو في ملفات المشروع.
 
-## Setup
+> **الخصوصية والأمان:** سترسل الصورة ومفتاح API عبر HTTPS إلى OpenAI عند التأكيد. لا ترفع صوراً تحتوي معلومات خاصة. هذا التطبيق التجريبي مناسب للاستخدام الشخصي فقط؛ لا تضع مفتاح API داخل APK توزعه على الآخر��ن. لتطبيق منشور، استخدم خادماً وسيطاً آمناً بدلاً من تضمين مفاتيح المستخدمين في العميل.
 
-Requires Python 3.10+.
+### التشغيل
+
+1. افتح مجلد `android/` في Android Studio وانتظر مزامنة Gradle.
+2. شغّل التطبيق على هاتف Android (Android 6.0 أو أحدث) أو محاكي.
+3. أدخل مفتاح OpenAI API، واختر صورة للسؤال، ثم اضغط زر الإرسال وأكد رفع الصورة.
+4. يحتاج الهاتف إلى اتصال بالإنترنت، وحساب API لديه صلاحية لاستخدام نموذج يدعم الصور.
+
+يمكن اختيار لقطة شاشة محفوظة من منتقي الصور في Android. لا يقرأ التطبيق الشاشة تلقائياً ولا يعمل في الخلفية.
+
+## نسخة سطر الأوامر للكمبيوتر
+
+يتطلب Python 3.10+:
 
 ```bash
 python -m venv .venv
-# macOS/Linux
-source .venv/bin/activate
-# Windows PowerShell
-# .venv\Scripts\Activate.ps1
+source .venv/bin/activate  # Windows: .venv\\Scripts\\Activate.ps1
 python -m pip install -r requirements.txt
-```
-
-Set your API key in the shell (do not commit it):
-
-```bash
-# macOS/Linux
-export OPENAI_API_KEY="your-api-key"
-# Windows PowerShell
-$env:OPENAI_API_KEY = "your-api-key"
-```
-
-Optionally set `OPENAI_MODEL` to another vision-capable model available to your account.
-
-## Run
-
-Capture and review the primary monitor before sending:
-
-```bash
-python main.py
-```
-
-Use a saved image instead (no screen capture):
-
-```bash
+export OPENAI_API_KEY="your-api-key"  # Windows PowerShell: $env:OPENAI_API_KEY="your-api-key"
 python main.py --image ./question.png
 ```
 
-The `--no-preview` option skips opening a preview but still asks for confirmation before upload. The program does not save captured screenshots to disk.
+استخدم هذا المساعد للتعلم حيثما تسمح القواعد، وتحقق دائماً من الإجابات؛ قد يخطئ الذكاء الاصطناعي.
